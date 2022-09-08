@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class NinjaController : MonoBehaviour
 {
-    public float velocity = 10, fuerzaSalto, jumpForce = 5;
+    public float velocity = 3.5f, jumpForce = 20;
     Rigidbody2D rb;
     SpriteRenderer sr;
     Animator animator;
     const int ANIMATION_QUIETO = 0;
     const int ANIMATION_CORRER = 1;
     const int ANIMATION_SALTAR = 2;
-    const int ANIMATION_ATACAR = 3;
-    Vector3 lastCheckPointPosition;
+    const int ANIMATION_MORIR = 3;
     int band = 0;
+    public GameObject bullet;
+    bool estaMuerto = false;
+    int contBalas = 0;
 
     //doble salto
     int vecesSalto = 0;
@@ -29,77 +31,32 @@ public class NinjaController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.X))
-        {
-            rb.velocity = new Vector2(velocity * 2, rb.velocity.y);
-            sr.flipX = false;
-            ChangeAnimation(ANIMATION_CORRER);
-        }
-        else if (Input.GetKey(KeyCode.RightArrow))
-        {
-            rb.velocity = new Vector2(velocity, rb.velocity.y);
-            sr.flipX = false;
-            ChangeAnimation(ANIMATION_CORRER);
-        }
-        else if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.X))
-        {
-            rb.velocity = new Vector2(-velocity * 2, rb.velocity.y);
-            sr.flipX = true;
-            ChangeAnimation(ANIMATION_CORRER);
-        }
-        else if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            rb.velocity = new Vector2(-velocity, rb.velocity.y);
-            sr.flipX = true;
-            ChangeAnimation(ANIMATION_CORRER);
-        }
-        //else if (Input.GetKeyUp(KeyCode.Space))//salto simple
-        //{
-        //    rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-        //    ChangeAnimation(ANIMATION_SALTAR);
-        //}
-        else if (Input.GetKeyUp(KeyCode.Space))//salto doble
-        {
-            if (vecesSalto < 2)
-            {
-                rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-                ChangeAnimation(ANIMATION_SALTAR);
-                vecesSalto += 1;
-            }
-        }
-        else if (Input.GetKeyUp(KeyCode.Z))
-        {
-            ChangeAnimation(ANIMATION_ATACAR);
-        }
-        else
+        rb.velocity = new Vector2(velocity, rb.velocity.y);
+        ChangeAnimation(ANIMATION_CORRER);
+        if (estaMuerto == true)
         {
             rb.velocity = new Vector2(0, rb.velocity.y);
-            ChangeAnimation(ANIMATION_QUIETO);
+            ChangeAnimation(ANIMATION_MORIR);
+        } else if (Input.GetKeyUp(KeyCode.Space))//salto doble
+        {
+            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            ChangeAnimation(ANIMATION_SALTAR);
+        }
+        else if (Input.GetKeyUp(KeyCode.Z) && contBalas < 5)
+        {
+            //crear bala
+            var bulletPosition = transform.position + new Vector3(3, 0, 0);
+            var gb = Instantiate(bullet, bulletPosition, Quaternion.identity) as GameObject;
+            var controller = gb.GetComponent<BulletController>();
+            controller.SetRightDirection();
+            contBalas++;
         }
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
-        vecesSalto = 0;
-        if (collision.gameObject.name == "DarkHole")
+        if (collision.gameObject.tag == "Enemy")
         {
-            if (lastCheckPointPosition != null)
-            {
-                transform.position = lastCheckPointPosition;
-            }
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Debug.Log("trigger");
-        if(collision.gameObject.name == "Checkpoint2")
-        {
-            band++;
-            lastCheckPointPosition = transform.position;
-        }
-        if(band <= 0)
-        {
-            lastCheckPointPosition = transform.position;
+            estaMuerto = true;            
         }
     }
 
