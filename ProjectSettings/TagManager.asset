@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Checkpoint
   - Enemy
+  - MonedaBronze
+  - MonedaPlata
+  - MonedaOro
+  - CheckPoint
+  - Guardar
   layers:
   - Default
   - TransparentFX

@@ -16,6 +16,7 @@ public class NinjaController : MonoBehaviour
     public GameObject bullet;
     bool estaMuerto = false;
     int contBalas = 0;
+    private GameManagerController gameManager;
 
     //doble salto
     int vecesSalto = 0;
@@ -26,6 +27,7 @@ public class NinjaController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        gameManager = FindObjectOfType<GameManagerController>();
     }
 
     // Update is called once per frame
@@ -45,6 +47,7 @@ public class NinjaController : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.Z) && contBalas < 5)
         {
             //crear bala
+            gameManager.RestarBalas();
             var bulletPosition = transform.position + new Vector3(3, 0, 0);
             var gb = Instantiate(bullet, bulletPosition, Quaternion.identity) as GameObject;
             var controller = gb.GetComponent<BulletController>();
