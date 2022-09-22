@@ -23,6 +23,10 @@ public class GameManagerController : MonoBehaviour
     public Text PuntajeText;
     private int Puntaje;
 
+    private float X;
+    private float Y;
+    private float Z;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,8 +35,10 @@ public class GameManagerController : MonoBehaviour
         Plata = 0;
         Oro = 0;
         Puntaje = 0;
+        X = 0.0f;
+        Y = 0.0f;
+        Z = 0.0f;
         LoadGame();
-        PrintBulletsInScreen();
         PrintBronzeInScreen();
         PrintPlataInScreen();
         PrintOroInScreen();
@@ -54,6 +60,10 @@ public class GameManagerController : MonoBehaviour
         data.MonedasPlata = Plata;
         data.MonedasOro = Oro;
         data.Puntaje = Puntaje;
+        data.X = X;
+        data.Y = Y;
+        data.Z = Z;
+        //data.lastCheckPointPosition = lastCheckPointPosition;
 
         BinaryFormatter bf = new BinaryFormatter();
         bf.Serialize(file, data);
@@ -85,6 +95,10 @@ public class GameManagerController : MonoBehaviour
         PrintOroInScreen();
         Puntaje = data.Puntaje;
         PrintPuntajeInScreen();
+        X = data.X;
+        Y = data.Y;
+        Z = data.Z;
+        //lastCheckPointPosition = data.lastCheckPointPosition;
     }
 
     public int Bullets()
@@ -144,5 +158,27 @@ public class GameManagerController : MonoBehaviour
     private void PrintPuntajeInScreen()
     {
         PuntajeText.text = "Puntaje: " + Puntaje;
+    }
+
+    public float PositionX()
+    {
+        return X;
+    }
+
+    public float PositionY()
+    {
+        return Y;
+    }
+
+    public float PositionZ()
+    {
+        return Z;
+    }
+
+    public void SetLastCheckPosition(float x, float y, float z)
+    {
+        X = x;
+        Y = y;
+        Z = z;
     }
 }

@@ -37,7 +37,7 @@ public class BulletController : MonoBehaviour
         Destroy(this.gameObject);//con esto destruye al objeto creado -> con esta condición hacemos que cunado choque contra cualquier objeto se destruya el objeto
         if (collision.gameObject.tag == "Enemy")//aquí le indicamos que cuando colisiona con un enemigo debe hacer...
         {
-            Destroy(collision.gameObject);//en este caso destruye el objeto al que colisiono
+            //Destroy(collision.gameObject);//en este caso destruye el objeto al que colisiono
             gameManager.SumarPuntaje();
         }
     }

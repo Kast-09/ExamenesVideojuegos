@@ -37,29 +37,24 @@ public class Ninja2Controller : MonoBehaviour
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
         gameManager = FindObjectOfType<GameManagerController>();
+        float X = gameManager.PositionX();
+        float Y = gameManager.PositionY();
+        float Z = gameManager.PositionZ();
+        if (X != 0.0f || Y != 0.0f || Z != 0.0f)
+        {
+            transform.position = new Vector3(X, Y, Z);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.X))
-        //{
-        //    rb.velocity = new Vector2(velocity * 2, rb.velocity.y);
-        //    sr.flipX = false;
-        //    ChangeAnimation(ANIMATION_CORRER);
-        //}
         if (Input.GetKey(KeyCode.RightArrow))
         {
             rb.velocity = new Vector2(velocity, rb.velocity.y);
             sr.flipX = false;
             ChangeAnimation(ANIMATION_CORRER);
         }
-        //else if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.X))
-        //{
-        //    rb.velocity = new Vector2(-velocity * 2, rb.velocity.y);
-        //    sr.flipX = true;
-        //    ChangeAnimation(ANIMATION_CORRER);
-        //}
         else if (Input.GetKey(KeyCode.LeftArrow))
         {
             rb.velocity = new Vector2(-velocity, rb.velocity.y);
@@ -84,7 +79,6 @@ public class Ninja2Controller : MonoBehaviour
                 var gb = Instantiate(bullet, bulletPosition, Quaternion.identity);
                 var controller = gb.GetComponent<BulletController>();
                 controller.SetLeftDirection();
-                //controller.SetScoreText(scoreText);
             }
             else
             {
@@ -92,41 +86,9 @@ public class Ninja2Controller : MonoBehaviour
                 var gb = Instantiate(bullet, bulletPosition, Quaternion.identity);
                 var controller = gb.GetComponent<BulletController>();
                 controller.SetRightDirection();
-                //controller.SetScoreText(scoreText);
             }
             ChangeAnimation(ANIMATION_ATACAR);
         }
-        //else if (Input.GetKey(KeyCode.LeftControl))
-        //{
-        //    rb.gravityScale = 10;
-        //    if (sr.flipX == true)
-        //        rb.velocity = new Vector2(-velocity, rb.velocity.y);
-        //    else
-        //        rb.velocity = new Vector2(velocity, rb.velocity.y);
-        //    ChangeAnimation(ANIMATION_DESLIZAR);
-        //}
-        //else if (Input.GetKey(KeyCode.UpArrow))
-        //{
-        //    ChangeAnimation(ANIMATION_ESCALAR);
-        //    rb.velocity = new Vector2(rb.velocity.x, velocity);
-        //}
-        //else if (Input.GetKey(KeyCode.UpArrow))
-        //{
-        //    rb.gravityScale = 0;
-        //    ChangeAnimation(ANIMATION_ESCALAR);
-        //    rb.velocity = new Vector2(rb.velocity.x, velocityEscalar);
-        //}
-        //else if (Input.GetKey(KeyCode.DownArrow))
-        //{
-        //    rb.gravityScale = 0;
-        //    ChangeAnimation(ANIMATION_ESCALAR);
-        //    rb.velocity = new Vector2(rb.velocity.x, -velocityEscalar);
-        //}
-        //else if (Input.GetKey(KeyCode.C))
-        //{
-        //    ChangeAnimation(ANIMATION_PLANEAR);
-        //    rb.velocity = new Vector2(rb.velocity.x, -velocityPlanear);
-        //}
         else
         {
             rb.gravityScale = 1;
@@ -137,6 +99,18 @@ public class Ninja2Controller : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         vecesSalto = 0;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        lastCheckPointPosition = transform.position;
+        if (collision.gameObject.tag == "Guardar")
+        {
+            gameManager.SetLastCheckPosition(lastCheckPointPosition.x, 
+                                            lastCheckPointPosition.y, 
+                                            lastCheckPointPosition.z);
+            gameManager.SaveGame();
+        }
         if (collision.gameObject.tag == "MonedaBronze")
         {
             Destroy(collision.gameObject);
@@ -154,16 +128,6 @@ public class Ninja2Controller : MonoBehaviour
             Destroy(collision.gameObject);
             audioSource.PlayOneShot(coinClip);
             gameManager.SumarOro();
-        }
-        //if (collision.gameObject.tag == "Enemy")
-        //{
-        //    Destroy(collision.gameObject);
-        //    audioSource.PlayOneShot(coinClip);
-        //    gameManager.SumarOro();
-        //}
-        if (collision.gameObject.tag == "Guardar")
-        {
-            gameManager.SaveGame();
         }
     }
 
