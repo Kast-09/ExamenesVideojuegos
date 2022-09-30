@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 7551531266066224968}
   - component: {fileID: 7551531266066224969}
   - component: {fileID: 7551531266066224974}
-  - component: {fileID: 7551531266066225013}
   - component: {fileID: 7551531266066225012}
   - component: {fileID: 7551531266066225015}
   m_Layer: 0
@@ -157,26 +156,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.32, y: 4.39}
   m_EdgeRadius: 0
---- !u!114 &7551531266066225013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7551531266066224975}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73ed1b4f36bc5e64489810dd11fe6617, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velocity: 10
-  fuerzaSalto: 0
-  jumpForce: 5
-  velocityEscalar: 5
-  velocityPlanear: 2
-  bullet: {fileID: 6267685349617554881, guid: f4e057531edd7b342b8f835da24d8785, type: 3}
-  jumpClip: {fileID: 8300000, guid: a750901d0b0457049b4e3dd2f7bcfac2, type: 3}
-  coinClip: {fileID: 8300000, guid: 7b71bffcad69bf74f8c7e479f4259f7b, type: 3}
 --- !u!82 &7551531266066225012
 AudioSource:
   m_ObjectHideFlags: 0
@@ -290,8 +269,8 @@ MonoBehaviour:
   jumpForce: 5
   velocityEscalar: 0.5
   velocityPlanear: 2
-  bullet: {fileID: 6267685349617554881, guid: f4e057531edd7b342b8f835da24d8785, type: 3}
+  bullet: {fileID: 7282730990216547335, guid: f4e057531edd7b342b8f835da24d8785, type: 3}
   Suelo2: {fileID: 0}
-  jumpClip: {fileID: 8300000, guid: a750901d0b0457049b4e3dd2f7bcfac2, type: 3}
-  bulletClip: {fileID: 8300000, guid: 30b04618977469f47a4563c72e351c98, type: 3}
+  jumpClip: {fileID: 8300000, guid: f3e18ec9efaa3eb4d9e1e281c80e22f7, type: 3}
+  bulletClip: {fileID: 8300000, guid: 1955f3972d00bf0499fa5405972f2597, type: 3}
   crecerClip: {fileID: 8300000, guid: 031c6368ac48fdb4ea1554ca89bccc95, type: 3}

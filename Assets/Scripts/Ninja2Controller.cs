@@ -37,13 +37,13 @@ public class Ninja2Controller : MonoBehaviour
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
         gameManager = FindObjectOfType<GameManagerController>();
-        float X = gameManager.PositionX();
-        float Y = gameManager.PositionY();
-        float Z = gameManager.PositionZ();
-        if (X != 0.0f || Y != 0.0f || Z != 0.0f)
-        {
-            transform.position = new Vector3(X, Y, Z);
-        }
+        //float X = gameManager.PositionX();
+        //float Y = gameManager.PositionY();
+        //float Z = gameManager.PositionZ();
+        //if (X != 0.0f || Y != 0.0f || Z != 0.0f)
+        //{
+        //    transform.position = new Vector3(X, Y, Z);
+        //}
     }
 
     // Update is called once per frame
@@ -106,28 +106,28 @@ public class Ninja2Controller : MonoBehaviour
         lastCheckPointPosition = transform.position;
         if (collision.gameObject.tag == "Guardar")
         {
-            gameManager.SetLastCheckPosition(lastCheckPointPosition.x, 
-                                            lastCheckPointPosition.y, 
-                                            lastCheckPointPosition.z);
+            //gameManager.SetLastCheckPosition(lastCheckPointPosition.x, 
+            //                                lastCheckPointPosition.y, 
+            //                                lastCheckPointPosition.z);
             gameManager.SaveGame();
         }
         if (collision.gameObject.tag == "MonedaBronze")
         {
             Destroy(collision.gameObject);
             audioSource.PlayOneShot(coinClip);
-            gameManager.SumarBronze();
+            //gameManager.SumarBronze();
         }
         if (collision.gameObject.tag == "MonedaPlata")
         {
             Destroy(collision.gameObject);
             audioSource.PlayOneShot(coinClip);
-            gameManager.SumarPlata();
+            //gameManager.SumarPlata();
         }
         if (collision.gameObject.tag == "MonedaOro")
         {
             Destroy(collision.gameObject);
             audioSource.PlayOneShot(coinClip);
-            gameManager.SumarOro();
+            //gameManager.SumarOro();
         }
     }
 

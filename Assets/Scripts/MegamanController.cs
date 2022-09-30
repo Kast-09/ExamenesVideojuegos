@@ -22,7 +22,7 @@ public class MegamanController : MonoBehaviour
     public GameObject bullet2;
     public GameObject bullet3;
 
-    float timeLeft;
+    float timeLeft = 0;
 
     // Start is called before the first frame update
     void Start()

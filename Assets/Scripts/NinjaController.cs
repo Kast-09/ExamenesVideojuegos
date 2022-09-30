@@ -47,7 +47,7 @@ public class NinjaController : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.Z) && contBalas < 5)
         {
             //crear bala
-            gameManager.RestarBalas();
+            //gameManager.RestarBalas();
             var bulletPosition = transform.position + new Vector3(3, 0, 0);
             var gb = Instantiate(bullet, bulletPosition, Quaternion.identity) as GameObject;
             var controller = gb.GetComponent<BulletController>();

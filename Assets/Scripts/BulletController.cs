@@ -20,16 +20,16 @@ public class BulletController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = FindObjectOfType<GameManagerController>();
         rb = GetComponent<Rigidbody2D>();
         Destroy(this.gameObject, 5);//con este método eliminamos el objeto creado despues de 5 segundos
-        gameManager = FindObjectOfType<GameManagerController>();
     }
 
     // Update is called once per frame
     void Update()
     {
         rb.velocity = new Vector2(realVelocity, 0);//con esto se modifica la velocidad, la primera es la velocidad en x y lo segundo en y
-        
+
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -38,7 +38,8 @@ public class BulletController : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")//aquí le indicamos que cuando colisiona con un enemigo debe hacer...
         {
             //Destroy(collision.gameObject);//en este caso destruye el objeto al que colisiono
-            gameManager.SumarPuntaje();
+            //gameManager.GanarPuntos(10);
+            gameManager.SaveGame();
         }
     }
 }

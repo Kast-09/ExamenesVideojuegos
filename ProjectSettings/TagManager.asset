@@ -17,6 +17,7 @@ TagManager:
   - BalaPequenia
   - BalaMediana
   - BalaGrande
+  - Kunai
   layers:
   - Default
   - TransparentFX
