@@ -7,14 +7,26 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class GameManagerController : MonoBehaviour
 {
-    public Text scoreText;
-    private int score;
+    //public Text scoreText;
+    //private int score;
+    public Text cantZombiesText;
+    private int zombies;
+    public Text cantMonedasText;
+    private int monedas;
+    public Text cantVidasText;
+    private int vidas;
     // Start is called before the first frame update
     void Start()
     {
-        score = 0;
-        PrintScoreInScreen();
-        LoadGame();
+        //score = 0;
+        zombies = 0;
+        monedas = 0;
+        vidas= 3;
+        PrintMonedasInScreen();
+        PrintVidasInScreen();
+        PrintZombiesInScreen();
+        //PrintScoreInScreen();
+        //LoadGame();
     }
 
     public void SaveGame()
@@ -29,7 +41,10 @@ public class GameManagerController : MonoBehaviour
             file = File.Create(filePath);
 
         GameData data = new GameData();
-        data.Score = score;
+        //data.Score = score;
+        data.vidas = vidas;
+        data.monedas = monedas;
+        data.zombies = zombies;
 
         BinaryFormatter bf = new BinaryFormatter();
         bf.Serialize(file, data);
@@ -53,23 +68,74 @@ public class GameManagerController : MonoBehaviour
         file.Close();
 
         //utilizar los datos guardados
-        score = data.Score;
-        PrintScoreInScreen();
+        //score = data.Score;
+        monedas = data.monedas;
+        zombies = data.zombies;
+        vidas = data.vidas;
+        //PrintScoreInScreen();
     }
 
-    public int Score()
+    //public int Score()
+    //{
+    //    return score;
+    //}
+
+    //public void GanarPuntos(int puntos)
+    //{
+    //    score += puntos;
+    //    PrintScoreInScreen();
+    //}
+
+    public int cantZombies()
     {
-        return score;
+        return zombies;
     }
 
-    public void GanarPuntos(int puntos)
+    public void contZombies()
     {
-        score += puntos;
-        PrintScoreInScreen();
+        zombies += 1;
+        PrintZombiesInScreen();
     }
 
-    private void PrintScoreInScreen()
+    public void PrintZombiesInScreen()
     {
-        scoreText.text = "Puntaje: " + score;
+        cantZombiesText.text = "Cant Zombies: " + zombies;
     }
+
+    public int cantVidas()
+    {
+        return vidas;
+    }
+
+    public void contVidas()
+    {
+        zombies -= 1;
+        PrintVidasInScreen();
+    }
+
+    public void PrintVidasInScreen()
+    {
+        cantVidasText.text = "Cant Vidas: " + vidas;
+    }
+
+    public int cantMonedas()
+    {
+        return monedas;
+    }
+
+    public void contMonedas()
+    {
+        monedas += 1;
+        PrintMonedasInScreen();
+    }
+
+    public void PrintMonedasInScreen()
+    {
+        cantMonedasText.text = "Cant Monedas: " + monedas;
+    }
+
+    //private void PrintScoreInScreen()
+    //{
+    //    scoreText.text = "Puntaje: " + score;
+    //}
 }

@@ -18,6 +18,8 @@ TagManager:
   - BalaMediana
   - BalaGrande
   - Kunai
+  - Coin
+  - Portal
   layers:
   - Default
   - TransparentFX

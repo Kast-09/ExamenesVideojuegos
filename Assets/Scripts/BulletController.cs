@@ -8,6 +8,7 @@ public class BulletController : MonoBehaviour
     public float velocity = 20;
     float realVelocity;
     private GameManagerController gameManager;
+    private Ninja3Controller ninja3Controller;
 
     public void SetRightDirection()
     {
@@ -21,6 +22,7 @@ public class BulletController : MonoBehaviour
     void Start()
     {
         gameManager = FindObjectOfType<GameManagerController>();
+        ninja3Controller = FindObjectOfType<Ninja3Controller>();
         rb = GetComponent<Rigidbody2D>();
         Destroy(this.gameObject, 5);//con este método eliminamos el objeto creado despues de 5 segundos
     }
@@ -37,9 +39,12 @@ public class BulletController : MonoBehaviour
         Destroy(this.gameObject);//con esto destruye al objeto creado -> con esta condición hacemos que cunado choque contra cualquier objeto se destruya el objeto
         if (collision.gameObject.tag == "Enemy")//aquí le indicamos que cuando colisiona con un enemigo debe hacer...
         {
-            //Destroy(collision.gameObject);//en este caso destruye el objeto al que colisiono
+            //Destroy(this.gameObject);
+            Destroy(collision.gameObject);//en este caso destruye el objeto al que colisiono
+            gameManager.contZombies();
+            ninja3Controller.cont++;
             //gameManager.GanarPuntos(10);
-            gameManager.SaveGame();
+            //gameManager.SaveGame();
         }
     }
 }

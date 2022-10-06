@@ -38,7 +38,7 @@ public class BulletController2 : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")//aquí le indicamos que cuando colisiona con un enemigo debe hacer...
         {
             Destroy(collision.gameObject);//en este caso destruye el objeto al que colisiono
-            gameManager.GanarPuntos(10);
+            //gameManager.GanarPuntos(10);
             gameManager.SaveGame();
         }
     }

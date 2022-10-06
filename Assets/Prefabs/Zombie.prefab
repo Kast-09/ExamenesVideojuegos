@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1116275739321721573}
   m_Layer: 0
   m_Name: Zombie
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b090fd65308064da1aa5069b98ae24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 10
+  velocity: 2
   fuerzaSalto: 0
   jumpForce: 5
+  velocity2: 2

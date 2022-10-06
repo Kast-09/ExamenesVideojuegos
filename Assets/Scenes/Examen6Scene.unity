@@ -1752,6 +1752,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ninja
       objectReference: {fileID: 0}
+    - target: {fileID: 7551531266066224975, guid: 6a50b3caeda32724db45d3e48e4da7c4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7551531266066225015, guid: 6a50b3caeda32724db45d3e48e4da7c4, type: 3}
       propertyPath: bullet
       value: 

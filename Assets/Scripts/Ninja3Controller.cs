@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using Random = UnityEngine.Random;
+using UnityEditor.Build;
+using UnityEngine.SceneManagement;
 
 public class Ninja3Controller : MonoBehaviour
 {
@@ -31,9 +33,12 @@ public class Ninja3Controller : MonoBehaviour
     public string arma2 = "Katana";
 
     int arma = 0;
+    int monedas = 0;
+    int vidas = 3;
 
     Vector3 lastCheckPointPosition;
     public GameObject bullet;
+    public GameObject portal;
     public GameObject zombie;
     public GameObject Suelo2;
 
@@ -41,11 +46,19 @@ public class Ninja3Controller : MonoBehaviour
     public AudioClip bulletClip;
     public AudioClip crecerClip;
 
+    private GameManagerController gameManager;
+    public Text cantMonedasText;
+    public Text cantVidasText;
+
     //doble salto
     int vecesSalto = 0;
 
     float timeLeft = 0.0f;
     int tiempo = 0;
+
+    bool band = false;
+
+    public int cont = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -58,12 +71,25 @@ public class Ninja3Controller : MonoBehaviour
         armaText.text = "Arma: Katana";
         cantZombies.text = "Zombies: "+zombies;
         asignarTiempo();
+        gameManager = FindObjectOfType<GameManagerController>();
+        gameManager.LoadGame();
+        gameManager.PrintVidasInScreen();
+        gameManager.PrintZombiesInScreen();
+        gameManager.PrintMonedasInScreen();
         Debug.Log(tiempo);
+        cantMonedasText.text = "Cant Monedas: " + monedas;
+        cantVidasText.text = "Cant Vidas: " + vidas;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(cont == 4)
+        {
+            var portalPosition = transform.position + new Vector3(5, 0, 0);
+            var gb = Instantiate(portal, portalPosition, Quaternion.identity) as GameObject;
+            cont++;
+        }
         Walk();
         cantZombies.text = "Zombies: " + zombies;
         timeLeft += Time.deltaTime;
@@ -212,6 +238,7 @@ public class Ninja3Controller : MonoBehaviour
     void AttackKatana()
     {
         ChangeAnimation(ANIMATION_ATACAR);
+        band = true;
     }
 
     public void WalkLeft()
@@ -231,6 +258,7 @@ public class Ninja3Controller : MonoBehaviour
     public void Jump()
     {
         rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        ChangeAnimation(ANIMATION_SALTAR);
     }
 
     public void changeArma()
@@ -249,14 +277,15 @@ public class Ninja3Controller : MonoBehaviour
 
     public void Attack()
     {
-        if (arma == 0)
-        {
-            AttackKatana();
-        }
-        else if (arma == 1)
-        {
-            AttackKunai();
-        }
+        AttackKunai();
+        //if (arma == 0)
+        //{
+        //    AttackKatana();
+        //}
+        //else if (arma == 1)
+        //{
+        //    AttackKunai();
+        //}
     }
 
     public void StopWalk()
@@ -268,9 +297,32 @@ public class Ninja3Controller : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         vecesSalto = 0;
-        if (collision.gameObject.tag == "Enemy")//con esto detecto si la clasificai?n del objeto es un enemigo y en base a la condici?n determina si mueres o no
+        //if (collision.gameObject.tag == "Enemy" && band == true)//con esto detecto si la clasificai?n del objeto es un enemigo y en base a la condici?n determina si mueres o no
+        //{
+        //    Debug.Log("Estas Muerto");
+        //    Destroy(collision.gameObject);
+        //    band = false;
+        //}
+        if (collision.gameObject.tag == "Coin")
         {
-            Debug.Log("Estas Muerto");
+            monedas++;
+            cantMonedasText.text = "Cant Monedas: " + monedas;
+            cont++;
+            Destroy(collision.gameObject);
+            //gameManager.contMonedas();
+        }
+        if (collision.gameObject.tag == "Enemy")
+        {
+
+            //Destroy(collision.gameObject);
+            //gameManager.contZombies();
+            vidas--;
+            cantVidasText.text = "Cant Vidas: " + vidas;
+            gameManager.contVidas();
+        }
+        if (collision.gameObject.tag == "Portal")
+        {
+            SceneManager.LoadScene(1);
         }
         if (collision.gameObject.name == "DarkHole")
         {
